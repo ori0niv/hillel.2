@@ -5,27 +5,13 @@
     <title>Title</title>
 </head>
 <script>
-    function removeElement(array, item) {
-        const newArray = [];
-
-        for (let i = 0; i < array.length; i++) {
-            const currentElement = array[i];
-
-            if (currentElement !== item) {
-                newArray.push(currentElement);
-            }
-        }
-
-        for (let i = 0; i < newArray.length; i++) {
-            array[i] = newArray[i];
-        }
-
-        array.length = newArray.length;
+    function multiply(a) {
+        return function (b) {
+            return a * b;
+        };
     }
 
-    const array = [1, 3, 4, 6, 2, 5, 7];
-    removeElement(array, 4);
-    console.log(array);
+    const result = multiply(5)(2);
 </script>
 <body>
 
