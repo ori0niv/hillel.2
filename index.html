@@ -5,13 +5,26 @@
     <title>Title</title>
 </head>
 <script>
-    function name(a) {
-        return function (b) {
-            return a * b;
-        };
+    function enterNumber() {
+        let number;
+
+        for (let i = 0; i < 10; i++) {
+            number = prompt("Введіть число більше 100:");
+
+            if (Number(number) > 100) {
+                console.log("Останнє введене число:", number);
+                return;
+            }
+
+            if (number === null || number.trim() === "") {
+                console.log("Введення скасовано.");
+                return;
+            }
+        }
+        console.log("Останнє введене значення:", number);
     }
 
-    const result = name(5)(2);
+    enterNumber();
 </script>
 <body>
 
