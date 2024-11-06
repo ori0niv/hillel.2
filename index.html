@@ -5,26 +5,30 @@
     <title>Title</title>
 </head>
 <script>
-    function enterNumber() {
-        let number;
+    let ladder = {
+        step: 0, // поточна сходинка
 
-        for (let i = 0; i < 10; i++) {
-            number = prompt("Введіть число більше 100:");
+        up: function() {
+            this.step++;       // піднімаємось на одну сходинку
+            return this;       // повертаємо об'єкт для ланцюжка
+        },
 
-            if (Number(number) > 100) {
-                console.log("Останнє введене число:", number);
-                return;
-            }
+        down: function() {
+            this.step--;       // опускаємось на одну сходинку
+            return this;       // повертаємо об'єкт для ланцюжка
+        },
 
-            if (number === null || number.trim() === "") {
-                console.log("Введення скасовано.");
-                return;
-            }
+        showStep: function() {
+            console.log(this.step); // показуємо поточну сходинку
+            return this;            // повертаємо об'єкт для ланцюжка
         }
-        console.log("Останнє введене значення:", number);
-    }
+    };
 
-    enterNumber();
+    // Використання ланцюжка
+    ladder.up().up().down().showStep(); // 1
+
+
+
 </script>
 <body>
 
