@@ -11,7 +11,7 @@ const contactBook = {
         }],
     findContactByName: function (name){
 
-        return this.contacts.filter(contact => contact.name.toLowerCase() === name.toLowerCase());
+        return this.contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase()) || "Contact not find";
     },
       addContact: function (name,phone,mail){
       const newContact= {name, phone, mail};
