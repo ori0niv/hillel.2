@@ -2,34 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<script>
-    let ladder = {
-        step: 2,
-
-        up: function() {
-            this.step++;
-            return this;
-        },
-
-        down: function() {
-            this.step--;
-            return this;
-        },
-
-        showStep: function() {
-            console.log(this.step);
-            return this;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица Пифагора</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
         }
-    };
-
-    ladder.up().up().down().showStep();
-
-
-
-</script>
+        th, td {
+            border: 1px solid #000;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
 <body>
+<h1>Таблица Пифагора</h1>
+<div id="table-container"></div>
 
+<script>
+    function createMultiplicationTable(size) {
+        const container = document.getElementById('table-container');
+
+        const table = document.createElement('table');
+
+        for (let i = 0; i <= size; i++) {
+            const row = document.createElement('tr');
+
+            for (let j = 0; j <= size; j++) {
+                const cell = i === 0 || j === 0 ? document.createElement('th') : document.createElement('td');
+
+                if (i === 0 && j === 0) {
+                    cell.textContent = '';
+                } else if (i === 0) {
+                    cell.textContent = j;
+                } else if (j === 0) {
+                    cell.textContent = i;
+                } else {
+                    cell.textContent = i * j;
+                }
+
+                row.appendChild(cell);
+            }
+
+            table.appendChild(row);
+        }
+
+        container.appendChild(table);
+    }
+
+    createMultiplicationTable(10);
+</script>
 </body>
 </html>
