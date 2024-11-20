@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  body{
+    font-family: Arial,sans-serif;
+    margin: 20px;
+    background-color: darkcyan;
+
+  }
+  #taskList{
+    list-style-type: none;
+    padding: 0;
+  }
+  #taskList li{
+   padding: 10px;
+    margin: 5px;
+    background-color: brown;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  button{
+    padding: 5px 10px;
+    background-color: beige;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover{
+    background-color: #cc0000;
+  }
+</style>
+<body>
+<input type="text" id="taskInput" placeholder="Введите новое задание!">
+<button id="addTaskButton">Добавить новое задание</button>
+<ul id="taskList"></ul>
+
+<script>
+  const taskInput =document.getElementById('taskInput');
+  const addTaskButton = document.getElementById('addTaskButton');
+  const taskList = document.getElementById('taskList');
+
+  let taskCount = 0;
+  const maxTasks = 5;
+
+  addTaskButton.addEventListener('click', function() {
+    const taskText = taskInput.value.trim();
+    if (taskText === "") {
+      alert("Введите пожалуйста задание!")
+      return
+    }
+    if (taskCount >= maxTasks) {
+      alert("Можно добавить только 5 заданий!")
+    }
+
+    const listItem = document.createElement('li');
+    listItem.textContent = taskText;
+
+    const deleteButton = document.createElement("button")
+    deleteButton.textContent = "Удалить"
+    listItem.appendChild(deleteButton)
+
+    taskList.appendChild(listItem);
+    taskCount++;
+
+    taskInput.value = ""
+
+  });
+    taskList.addEventListener('click', function(event){
+      if(event.target.tagName === 'BUTTON'){
+        const listItem = event.target.parentElement
+        taskList.removeChild(listItem)
+        taskCount--
+      }
+    });
+
+
+</script>
+</body>
+</html>
