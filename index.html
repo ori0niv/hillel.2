@@ -2,59 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Таблица Пифагора</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #000;
-            text-align: center;
-            padding: 8px;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-    </style>
+    <title></title>
 </head>
 <body>
-<h1>Таблица Пифагора</h1>
-<div id="table-container"></div>
+<button id="setLinkButton">Ввод ссылки</button>
+<button id="redirectButton">Перейти на сайт</button>
 
 <script>
-    function createMultiplicationTable(size) {
-        const container = document.getElementById('table-container');
+    let userLink = "";
 
-        const table = document.createElement('table');
-
-        for (let i = 0; i <= size; i++) {
-            const row = document.createElement('tr');
-
-            for (let j = 0; j <= size; j++) {
-                const cell = i === 0 || j === 0 ? document.createElement('th') : document.createElement('td');
-
-                if (i === 0 && j === 0) {
-                    cell.textContent = '';
-                } else if (i === 0) {
-                    cell.textContent = j;
-                } else if (j === 0) {
-                    cell.textContent = i;
-                } else {
-                    cell.textContent = i * j;
-                }
-
-                row.appendChild(cell);
-            }
-
-            table.appendChild(row);
+    document.getElementById('setLinkButton').addEventListener('click', function () {
+        const link = prompt("Введите ссылку (URL):");
+        if (link && link.startsWith("http")) {
+            userLink = link
+            alert("Ссылка сохранена!");
+        } else {
+            alert("Введите правильную ссылку!");
         }
+    });
 
-        container.appendChild(table);
-    }
-
-    createMultiplicationTable(10);
+    document.getElementById('redirectButton').addEventListener('click', function () {
+        if (userLink) {
+            window.location.href = userLink;
+        } else {
+            alert("Сначала введите ссылку!");
+        }
+    });
 </script>
 </body>
 </html>
