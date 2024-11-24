@@ -2,32 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<button id="setLinkButton">Ввод ссылки</button>
-<button id="redirectButton">Перейти на сайт</button>
-
-<script>
-    let userLink = "";
-
-    document.getElementById('setLinkButton').addEventListener('click', function () {
-        const link = prompt("Введите ссылку (URL):");
-        if (link && link.startsWith("http")) {
-            userLink = link
-            alert("Ссылка сохранена!");
-        } else {
-            alert("Введите правильную ссылку!");
-        }
-    });
-
-    document.getElementById('redirectButton').addEventListener('click', function () {
-        if (userLink) {
-            window.location.href = userLink;
-        } else {
-            alert("Сначала введите ссылку!");
-        }
-    });
-</script>
+<div class="form-container">
+    <h1>We would like to help you</h1>
+    <form id="contactForm">
+        <label>
+            Name
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            <span class="error" id="nameError"></span>
+        </label>
+        <label>
+            Message
+            <textarea id="message" name="message" placeholder="Message" required></textarea>
+            <span class="error" id="messageError"></span>
+        </label>
+        <label>
+            Phone number
+            <input type="text" id="phone" name="phone" placeholder="Phone number +380" required>
+            <span class="error" id="phoneError"></span>
+        </label>
+        <label>
+            Email
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <span class="error" id="emailError"></span>
+        </label>
+        <button type="submit">Send message</button>
+    </form>
+</div>
+<script src="index.js"></script>
 </body>
 </html>

@@ -1,25 +1,55 @@
-const contactBook = {
-    contacts:[{
-        name: 'Maksim Iliev',
-        phone: +'905348823617',
-        mail: 'maksim.iliev@icloud.com'
-    },
-        {
-            name: 'Daria Dobrov',
-            phone: '+380984165822',
-            mail: 'dobrov.daria@gmail.com'
-        }],
-    findContactByName: function (name){
+document.getElementById("contactForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-        return this.contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase()) || "Contact not find";
-    },
-      addContact: function (name,phone,mail){
-      const newContact= {name, phone, mail};
-      this.contacts.push(newContact);
-      console.log("New contact", newContact);
-      }
-}
+    const name = document.getElementById("name").value.trim();
+    const message = document.getElementById("message").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-console.log(contactBook.findContactByName("Maksim Iliev"));
-contactBook.addContact("Valera Pisakov","+35950025545421", "ololo@mail.com");
-console.log(contactBook.contacts);
+    const nameError = document.getElementById("nameError");
+    const messageError = document.getElementById("messageError");
+    const phoneError = document.getElementById("phoneError");
+    const emailError = document.getElementById("emailError");
+
+    nameError.textContent = "";
+    messageError.textContent = "";
+    phoneError.textContent = "";
+    emailError.textContent = "";
+
+    const phoneRegex = /^\+380\d{9}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    let isValid = true;
+
+    if (!name) {
+        nameError.textContent = "Name is required.";
+        isValid = false;
+    }
+
+    if (message.length < 5) {
+        messageError.textContent = "Message must be at least 5 characters.";
+        isValid = false;
+    }
+
+    if (!phoneRegex.test(phone)) {
+        phoneError.textContent = "Phone number must start with +380 and include 9 digits.";
+        isValid = false;
+    }
+
+    if (!emailRegex.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        isValid = false;
+    }
+
+    if (isValid) {
+        console.log({
+            name: name,
+            message: message,
+            phone: phone,
+            email: email,
+        });
+
+        alert("Message sent successfully!");
+        this.reset();
+    }
+});
