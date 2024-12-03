@@ -7,32 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="form-container">
-    <h1>We would like to help you</h1>
-    <form id="contactForm">
-        <label>
-            Name
-            <input type="text" id="name" name="name" placeholder="Name" required>
-            <span class="error" id="nameError"></span>
-        </label>
-        <label>
-            Message
-            <textarea id="message" name="message" placeholder="Message" required></textarea>
-            <span class="error" id="messageError"></span>
-        </label>
-        <label>
-            Phone number
-            <input type="text" id="phone" name="phone" placeholder="Phone number +380" required>
-            <span class="error" id="phoneError"></span>
-        </label>
-        <label>
-            Email
-            <input type="email" id="email" name="email" placeholder="Email" required>
-            <span class="error" id="emailError"></span>
-        </label>
-        <button type="submit">Send message</button>
-    </form>
+<div class="slider">
+    <button class="btn prev" id="prevBtn">Back</button>
+    <div class="slides">
+        <img src="https://mixnews.lv/wp-content/uploads/2023/05/27/photo16851195431.webp" alt="Image 1" class="slide">
+        <img src="https://mixnews.lv/wp-content/uploads/2023/05/27/photo16851195466.webp" alt="Image 2" class="slide">
+        <img src="https://24gadget.ru/uploads/posts/2021-11/1636621455_bez-imeni-1.png" alt="Image 3" class="slide">
+    </div>
+    <button class="btn next" id="nextBtn">Next</button>
 </div>
+<div class="dots" id="dotsContainer"></div>
 <script src="index.js"></script>
 </body>
 </html>

@@ -1,55 +1,52 @@
-document.getElementById("contactForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+const slides = document.querySelectorAll('.slide');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dotsContainer = document.querySelector('.dots');
 
-    const name = document.getElementById("name").value.trim();
-    const message = document.getElementById("message").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const email = document.getElementById("email").value.trim();
+let currentSlide = 0;
 
-    const nameError = document.getElementById("nameError");
-    const messageError = document.getElementById("messageError");
-    const phoneError = document.getElementById("phoneError");
-    const emailError = document.getElementById("emailError");
+slides.forEach((_, index) => {
+    const dot = document.createElement('div');
+    dot.classList.add('dot');
+    if (index === 0) dot.classList.add('active');
+    dot.dataset.slide = index;
+    dotsContainer.appendChild(dot);
+});
 
-    nameError.textContent = "";
-    messageError.textContent = "";
-    phoneError.textContent = "";
-    emailError.textContent = "";
+const dots = document.querySelectorAll('.dot');
 
-    const phoneRegex = /^\+380\d{9}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function updateSlider() {
+    slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentSlide);
+    });
 
-    let isValid = true;
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+    });
 
-    if (!name) {
-        nameError.textContent = "Name is required.";
-        isValid = false;
-    }
+    prevBtn.hidden = currentSlide === 0;
+    nextBtn.hidden = currentSlide === slides.length - 1;
+}
 
-    if (message.length < 5) {
-        messageError.textContent = "Message must be at least 5 characters.";
-        isValid = false;
-    }
-
-    if (!phoneRegex.test(phone)) {
-        phoneError.textContent = "Phone number must start with +380 and include 9 digits.";
-        isValid = false;
-    }
-
-    if (!emailRegex.test(email)) {
-        emailError.textContent = "Please enter a valid email address.";
-        isValid = false;
-    }
-
-    if (isValid) {
-        console.log({
-            name: name,
-            message: message,
-            phone: phone,
-            email: email,
-        });
-
-        alert("Message sent successfully!");
-        this.reset();
+prevBtn.addEventListener('click', () => {
+    if (currentSlide > 0) {
+        currentSlide--;
+        updateSlider();
     }
 });
+
+nextBtn.addEventListener('click', () => {
+    if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlider();
+    }
+});
+
+dotsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('dot')) {
+        currentSlide = parseInt(e.target.dataset.slide, 10);
+        updateSlider();
+    }
+});
+
+updateSlider();
