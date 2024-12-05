@@ -1,52 +1,54 @@
-const slides = document.querySelectorAll('.slide');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const dotsContainer = document.querySelector('.dots');
+// Отримуємо елементи
+const form = document.querySelector('.js--form');
+const input = document.querySelector('.js--form__input');
+const todosWrapper = document.querySelector('.js--todos-wrapper');
 
-let currentSlide = 0;
+let todos = JSON.parse(localStorage.getItem('todos')) || [];
 
-slides.forEach((_, index) => {
-    const dot = document.createElement('div');
-    dot.classList.add('dot');
-    if (index === 0) dot.classList.add('active');
-    dot.dataset.slide = index;
-    dotsContainer.appendChild(dot);
-});
+function renderTodos() {
+    todosWrapper.innerHTML = '';
+    todos.forEach((todo, index) => {
+        const todoItem = document.createElement('li');
+        todoItem.className = `todo-item ${todo.completed ? 'todo-item--checked' : ''}`;
 
-const dots = document.querySelectorAll('.dot');
-
-function updateSlider() {
-    slides.forEach((slide, index) => {
-        slide.classList.toggle('active', index === currentSlide);
+        todoItem.innerHTML = `
+            <input type="checkbox" ${todo.completed ? 'checked' : ''} data-index="${index}" class="todo-checkbox">
+            <span class="todo-item__description">${todo.text}</span>
+            <button class="todo-item__delete" data-index="${index}">Видалити</button>
+        `;
+        todosWrapper.appendChild(todoItem);
     });
-
-    dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-    });
-
-    prevBtn.hidden = currentSlide === 0;
-    nextBtn.hidden = currentSlide === slides.length - 1;
 }
 
-prevBtn.addEventListener('click', () => {
-    if (currentSlide > 0) {
-        currentSlide--;
-        updateSlider();
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const newTodo = { text: input.value, completed: false };
+    todos.push(newTodo);
+    input.value = '';
+    updateLocalStorage();
+    renderTodos();
+});
+
+todosWrapper.addEventListener('click', (e) => {
+    if (e.target.classList.contains('todo-item__delete')) {
+        const index = e.target.dataset.index;
+        todos.splice(index, 1);
+        updateLocalStorage();
+        renderTodos();
     }
 });
 
-nextBtn.addEventListener('click', () => {
-    if (currentSlide < slides.length - 1) {
-        currentSlide++;
-        updateSlider();
+todosWrapper.addEventListener('change', (e) => {
+    if (e.target.classList.contains('todo-checkbox')) {
+        const index = e.target.dataset.index;
+        todos[index].completed = e.target.checked;
+        updateLocalStorage();
+        renderTodos();
     }
 });
 
-dotsContainer.addEventListener('click', (e) => {
-    if (e.target.classList.contains('dot')) {
-        currentSlide = parseInt(e.target.dataset.slide, 10);
-        updateSlider();
-    }
-});
+function updateLocalStorage() {
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
 
-updateSlider();
+renderTodos();

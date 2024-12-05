@@ -1,71 +1,70 @@
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.2;
+    font-size: 18px;
+    background-color: darkgrey;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 75%;
+}
+
+.form {
+    background: #fff;
+    padding: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f4f4f4;
 }
 
-.slider {
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    overflow: hidden;
+.form__input {
+    min-height: 25px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid;
 }
 
-.slider-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slide {
-    min-width: 100%;
-    display: none;
-}
-
-.slide.active {
-    display: block;
-}
-
-.btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+.form__btn {
+    background: limegreen;
     border: none;
-    padding: 10px 20px;
     cursor: pointer;
-    z-index: 10;
+    width: 100px;
+    margin-left: 10px;
 }
 
-.btn.prev {
-    left: 10px;
-}
-
-.btn.next {
-    right: 10px;
-}
-
-.dots {
+.todo-item {
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
-
-.dot {
-    width: 10px;
-    height: 10px;
-    margin: 0 5px;
-    border-radius: 50%;
-    background-color: #ccc;
+.todo-item--checked {
+    text-decoration: line-through;
+}
+.todo-item__description {
+    flex-grow: 1;
+    padding-left: 10px;
+}
+.todo-item__delete {
+    background: red;
+    border: none;
     cursor: pointer;
-}
-
-.dot.active {
-    background-color: #333;
+    width: 95px;
+    padding: 10px;
 }

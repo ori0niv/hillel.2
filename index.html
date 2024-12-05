@@ -2,21 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="slider">
-    <button class="btn prev" id="prevBtn">Back</button>
-    <div class="slides">
-        <img src="https://mixnews.lv/wp-content/uploads/2023/05/27/photo16851195431.webp" alt="Image 1" class="slide">
-        <img src="https://mixnews.lv/wp-content/uploads/2023/05/27/photo16851195466.webp" alt="Image 2" class="slide">
-        <img src="https://24gadget.ru/uploads/posts/2021-11/1636621455_bez-imeni-1.png" alt="Image 3" class="slide">
-    </div>
-    <button class="btn next" id="nextBtn">Next</button>
+<div class="container">
+    <h1>ToDoList</h1>
+    <form class="form js--form">
+        <input type="text" name="value" required class="form__input js--form__input">
+        <button class="form__btn">Додати</button>
+    </form>
+    <ul class="js--todos-wrapper">
+        <li class="todo-item">
+            <input type="checkbox">
+            <span class="todo-item__description">Text</span>
+            <button class="todo-item__delete">Видалити</button>
+        </li>
+        <li class="todo-item todo-item--checked">
+            <input type="checkbox">
+            <span class="todo-item__description">Text</span>
+            <button class="todo-item__delete">Видалити</button>
+        </li>
+    </ul>
 </div>
-<div class="dots" id="dotsContainer"></div>
 <script src="index.js"></script>
 </body>
 </html>
