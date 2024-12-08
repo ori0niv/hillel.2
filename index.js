@@ -1,54 +1,114 @@
-// Отримуємо елементи
-const form = document.querySelector('.js--form');
-const input = document.querySelector('.js--form__input');
-const todosWrapper = document.querySelector('.js--todos-wrapper');
+// Конструктор сутності "Студент"
+class Student {
+    constructor(firstName, lastName, birthYear) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthYear = birthYear;
+        this.grades = []; // Масив оцінок
+        this.attendance = new Array(25).fill(null); // Масив відвідуваності
+    }
 
-let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    // Метод для отримання віку
+    getAge() {
+        const currentYear = new Date().getFullYear();
+        return currentYear - this.birthYear;
+    }
 
-function renderTodos() {
-    todosWrapper.innerHTML = '';
-    todos.forEach((todo, index) => {
-        const todoItem = document.createElement('li');
-        todoItem.className = `todo-item ${todo.completed ? 'todo-item--checked' : ''}`;
+    // Метод для отримання середнього балу
+    getAverageGrade() {
+        if (this.grades.length === 0) return 0;
+        const sum = this.grades.reduce((acc, grade) => acc + grade, 0);
+        return Math.round((sum / this.grades.length) * 10) / 10; // Округлення до 1 десяткового
+    }
 
-        todoItem.innerHTML = `
-            <input type="checkbox" ${todo.completed ? 'checked' : ''} data-index="${index}" class="todo-checkbox">
-            <span class="todo-item__description">${todo.text}</span>
-            <button class="todo-item__delete" data-index="${index}">Видалити</button>
-        `;
-        todosWrapper.appendChild(todoItem);
-    });
+    // Метод для додавання оцінок
+    addGrade(grade) {
+        if (grade >= 0 && grade <= 100) {
+            this.grades.push(grade);
+        } else {
+            console.log("Оцінка має бути в межах 0-100.");
+        }
+    }
+
+    // Метод для відмітки відвідуваності (присутній)
+    present() {
+        const index = this.attendance.indexOf(null);
+        if (index !== -1) {
+            this.attendance[index] = true;
+        } else {
+            console.log("Масив відвідуваності вже заповнений.");
+        }
+    }
+
+    // Метод для відмітки відвідуваності (відсутній)
+    absent() {
+        const index = this.attendance.indexOf(null);
+        if (index !== -1) {
+            this.attendance[index] = false;
+        } else {
+            console.log("Масив відвідуваності вже заповнений.");
+        }
+    }
+
+    // Метод для обчислення середнього відвідування
+    getAttendanceRate() {
+        const attendedClasses = this.attendance.filter(status => status === true).length;
+        const totalClasses = this.attendance.filter(status => status !== null).length;
+        if (totalClasses === 0) return 0;
+        return Math.round((attendedClasses / totalClasses) * 10) / 10; // Округлення до 1 десяткового
+    }
+
+    // Метод для підсумку
+    summary() {
+        const avgGrade = this.getAverageGrade();
+        const attendanceRate = this.getAttendanceRate();
+
+        if (avgGrade > 90 && attendanceRate > 0.9) {
+            return "Молодець!";
+        } else if (avgGrade > 90 || attendanceRate > 0.9) {
+            return "Добре, але можна краще";
+        } else {
+            return "Редиска!";
+        }
+    }
 }
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const newTodo = { text: input.value, completed: false };
-    todos.push(newTodo);
-    input.value = '';
-    updateLocalStorage();
-    renderTodos();
-});
+// Створення екземплярів студентів
+const student1 = new Student("Олександр", "Коваленко", 2000);
+const student2 = new Student("Марія", "Петренко", 1998);
+const student3 = new Student("Іван", "Іванов", 2001);
 
-todosWrapper.addEventListener('click', (e) => {
-    if (e.target.classList.contains('todo-item__delete')) {
-        const index = e.target.dataset.index;
-        todos.splice(index, 1);
-        updateLocalStorage();
-        renderTodos();
-    }
-});
+// Використання методів
+student1.addGrade(95);
+student1.addGrade(88);
+student1.addGrade(92);
+student1.present();
+student1.present();
+student1.absent();
 
-todosWrapper.addEventListener('change', (e) => {
-    if (e.target.classList.contains('todo-checkbox')) {
-        const index = e.target.dataset.index;
-        todos[index].completed = e.target.checked;
-        updateLocalStorage();
-        renderTodos();
-    }
-});
+student2.addGrade(70);
+student2.addGrade(85);
+student2.absent();
+student2.present();
+student2.absent();
 
-function updateLocalStorage() {
-    localStorage.setItem('todos', JSON.stringify(todos));
-}
+student3.addGrade(60);
+student3.addGrade(50);
+student3.addGrade(40);
+for (let i = 0; i < 25; i++) student3.absent();
 
-renderTodos();
+// Вивід результатів
+console.log(`${student1.firstName} ${student1.lastName}, Вік: ${student1.getAge()}`);
+console.log("Середній бал:", student1.getAverageGrade());
+console.log("Відвідуваність:", student1.getAttendanceRate());
+console.log("Підсумок:", student1.summary());
+
+console.log(`${student2.firstName} ${student2.lastName}, Вік: ${student2.getAge()}`);
+console.log("Середній бал:", student2.getAverageGrade());
+console.log("Відвідуваність:", student2.getAttendanceRate());
+console.log("Підсумок:", student2.summary());
+
+console.log(`${student3.firstName} ${student3.lastName}, Вік: ${student3.getAge()}`);
+console.log("Середній бал:", student3.getAverageGrade());
+console.log("Відвідуваність:", student3.getAttendanceRate());
+console.log("Підсумок:", student3.summary());
