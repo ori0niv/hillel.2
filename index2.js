@@ -6,7 +6,6 @@ class BankAccount {
     getBalance() {
         return this.balance;
     }
-
     deposit(amount) {
         if (amount > 0) {
             this.balance += amount;
