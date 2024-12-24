@@ -1,34 +1,24 @@
-let startTime = 85;
+const apiKey = 'YOUR_API_KEY'; 
+const city = 'Kyiv'; 
 
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+async function fetchWeather() {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=uk`
+    );
+    if (!response.ok) {
+      throw new Error('Не вдалося отримати дані про погоду');
+    }
+    const data = await response.json();
+    document.getElementById('city').textContent = data.name;
+    document.getElementById('temperature').textContent = Math.round(data.main.temp);
+    document.getElementById('description').textContent = data.weather[0].description;
+  } catch (error) {
+    console.error('Помилка:', error);
+    alert('Помилка при завантаженні погоди. Перевірте API ключ або інтернет-з’єднання.');
+  }
 }
 
-const timerDisplay = document.createElement('div');
-timerDisplay.style.fontSize = '65px';
-timerDisplay.style.fontWeight = 'bold';
-timerDisplay.style.margin = '20px';
-document.body.appendChild(timerDisplay);
+fetchWeather();
 
-timerDisplay.textContent = formatTime(startTime);
-
-function startTimer(duration) {
-    let timeLeft = duration;
-
-    const timerInterval = setInterval(() => {
-        timerDisplay.textContent = formatTime(timeLeft);
-
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            timerDisplay.textContent = "00:00";
-            alert("Час вийшов!");
-        } else {
-            timeLeft--;
-        }
-    }, 1000);
-}
-
-startTimer(startTime);
 
