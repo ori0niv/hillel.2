@@ -1,10 +1,9 @@
-const apiUrl = 'http://localhost:5000/api/todos';
+const apiUrl = 'http://localhost:5002/api/todos';
 
 const todoForm = document.getElementById('todoForm');
 const todoInput = document.getElementById('todoInput');
 const todoList = document.getElementById('todoList');
 
-// Завантажити задачі
 async function fetchTodos() {
     const response = await fetch(apiUrl);
     const todos = await response.json();
@@ -24,7 +23,6 @@ async function fetchTodos() {
     });
 }
 
-// Додати задачу
 todoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const newTodo = { title: todoInput.value };
@@ -37,7 +35,6 @@ todoForm.addEventListener('submit', async (e) => {
     fetchTodos();
 });
 
-// Перемикання стану задачі
 async function toggleTodo(id, completed) {
     await fetch(`${apiUrl}/${id}`, {
         method: 'PUT',
@@ -47,12 +44,10 @@ async function toggleTodo(id, completed) {
     fetchTodos();
 }
 
-// Видалити задачу
 async function deleteTodo(id) {
     await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
     fetchTodos();
 }
 
-// Ініціалізація
 fetchTodos();
 

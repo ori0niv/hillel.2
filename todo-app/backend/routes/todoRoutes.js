@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Todo = require('../models/Todo');
 
-// Створити нову задачу
 router.post('/', async (req, res) => {
     try {
         const todo = new Todo({
@@ -15,7 +14,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Отримати всі задачі
 router.get('/', async (req, res) => {
     try {
         const todos = await Todo.find();
@@ -25,7 +23,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Оновити задачу
 router.put('/:id', async (req, res) => {
     try {
         const updatedTodo = await Todo.findByIdAndUpdate(
@@ -39,7 +36,6 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Видалити задачу
 router.delete('/:id', async (req, res) => {
     try {
         await Todo.findByIdAndDelete(req.params.id);
