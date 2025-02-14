@@ -29,6 +29,7 @@ function TodoList() {
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
             />
+
             <Button variant="contained" sx={{ marginTop: 2 }} onClick={addTask}>
                 Додати
             </Button>
