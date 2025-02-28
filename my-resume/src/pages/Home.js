@@ -17,7 +17,6 @@ function Home() {
 
                     I am excited about this fast-changing field and am determined to make it my career. I believe my skills in communication, solving problems, managing priorities, and working alone will help me succeed in Front End development.
                 </Typography>
-
                 <Typography variant="h6" sx={{ marginTop: 3 }}>Skills:</Typography>
                 <Stack direction="row" spacing={1} sx={{ marginTop: 1 }}>
                     {["HTML5", "CSS", "SCSS/SASS", "GIT", "JS", "DOM", "GitHub","Bootstrap", "React", "npm" ].map(skill => (

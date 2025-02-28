@@ -10,7 +10,6 @@ function SwapiPage() {
             .then(response => setCharacters(response.data.results))
             .catch(error => console.error("Error fetching data: ", error));
     }, []);
-
     return (
         <Paper sx={{ padding: 3, marginTop: 2 }}>
             <Typography variant="h5">Персонажі Star Wars</Typography>

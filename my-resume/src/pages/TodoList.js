@@ -6,7 +6,6 @@ function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [task, setTask] = useState("");
 
-    // Додає нове завдання
     const addTask = () => {
         if (task.trim()) {
             setTasks([...tasks, task]);
@@ -14,7 +13,6 @@ function TodoList() {
         }
     };
 
-    // Видаляє завдання за індексом
     const deleteTask = (index) => {
         const newTasks = tasks.filter((_, i) => i !== index);
         setTasks(newTasks);
