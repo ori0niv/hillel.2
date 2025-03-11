@@ -1,5 +1,5 @@
-import React from "react";
-import TodoList from "./TodoList";
+import React from 'react';
+import TodoList from './features/todos/TodoList';
 
 function App() {
   return (
@@ -8,4 +8,5 @@ function App() {
       </div>
   );
 }
+
 export default App;
