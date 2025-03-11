@@ -1,15 +1,38 @@
 import axios from 'axios';
 
-const API_URL =  process.env.REACT_APP_API_URL;
-
 export const fetchDestinations = async () => {
-    const response = await axios.get(`${API_URL}/destinations`);
-    return response.data;
+    try {
+        console.log('Sending request to: /destinations'); // Логируем относительный путь
+        const response = await axios.get('/destinations', {
+            timeout: 5000,
+        });
+        console.log('Response from server:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Network Error Details:', {
+            message: error.message,
+            code: error.code,
+            config: error.config ? error.config.url : 'No config',
+        });
+        throw error;
+    }
 };
 
 export const fetchHotels = async (formData) => {
-    const response = await axios.get(`${API_URL}/hotels`, {
-        params: formData, // Передаем данные формы как параметры запроса
-    });
-    return response.data;
+    try {
+        console.log('Sending request to: /hotels', 'with params:', formData);
+        const response = await axios.get('/hotels', {
+            params: formData,
+            timeout: 5000,
+        });
+        console.log('Response from server:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Network Error Details:', {
+            message: error.message,
+            code: error.code,
+            config: error.config ? error.config.url : 'No config',
+        });
+        throw error;
+    }
 };

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { TextField, Button, Box, Typography, Autocomplete, Container } from '@mui/material';
-import { fetchDestinationsRequest } from '../redux/actions/destinationActions';
-import { fetchHotelsRequest } from '../redux/actions/hotelActions';
+import { fetchDestinationsAsync } from '../redux/slices/destinationsSlice';
+import { fetchHotelsAsync } from '../redux/slices/hotelsSlice';
 
 const validate = (values) => {
     const errors = {};
@@ -21,20 +21,23 @@ const validate = (values) => {
 
 function MainPage() {
     const dispatch = useDispatch();
-    const { destinations } = useSelector((state) => state.destinations);
+    const { destinations, loading, error } = useSelector((state) => state.destinations);
 
     useEffect(() => {
-        dispatch(fetchDestinationsRequest());
+        dispatch(fetchDestinationsAsync());
     }, [dispatch]);
 
-    const onSubmit = (values) => {
-        dispatch(fetchHotelsRequest(values));
-    };
+    console.log('Destinations state:', { destinations, loading, error });
+
+    if (loading) return <Typography>Загрузка...</Typography>;
+    if (error) return <Typography>Ошибка: {error}</Typography>;
+
+    const mockDestinations = destinations.length ? destinations : ["New York", "Chicago", "Los Angeles"];
 
     return (
         <Container sx={{ mt: 4 }}>
             <Form
-                onSubmit={onSubmit}
+                onSubmit={(values) => dispatch(fetchHotelsAsync(values))}
                 validate={validate}
                 render={({ handleSubmit, form, submitting, pristine }) => (
                     <form onSubmit={handleSubmit}>
@@ -43,11 +46,14 @@ function MainPage() {
                                 {({ input, meta }) => (
                                     <Autocomplete
                                         {...input}
-                                        options={destinations}
+                                        options={mockDestinations} // Используем заглушку
                                         getOptionLabel={(option) =>
                                             typeof option === 'string' ? option : option.label || option.value || ''
-                                        } // Обрабатываем как строки, так и объекты
-                                        onChange={(event, value) => input.onChange(value)}
+                                        }
+                                        onChange={(event, value) => {
+                                            const newValue = typeof value === 'string' ? value : value?.value || value?.label || '';
+                                            input.onChange(newValue);
+                                        }}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
